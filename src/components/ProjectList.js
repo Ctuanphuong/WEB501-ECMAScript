@@ -1,10 +1,10 @@
 import ProjectItem from "./ProjectItem";
 const ProjectList = ({ projects }) => {
-  return `<div class="mt-2 mb-2">${projects
+  return `<div class="container tw-mt-2 tw-mb-2">${projects
     .map(
       (project) => `<div>
-    <ul>
-    <li class="mt-1 mb-1">
+    <ul class="p-0 m-0">
+    <li class="tw-pt-2">
     ${ProjectItem({ project })}
     </li>
     </ul>

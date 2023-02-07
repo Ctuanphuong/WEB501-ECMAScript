@@ -3,7 +3,9 @@ import Footer from "../components/Footer";
 const Contact = () => {
   return `<div>
   ${Header()}</div>
-  <h1 class="text-2xl font-bold mt-5">Contact Page</h1>
+  <div class="container">
+  <h1 class="tw-text-2xl tw-font-bold tw-mt-5">Contact</h1>
+  </div>
   ${Footer()}
   `;
 };
