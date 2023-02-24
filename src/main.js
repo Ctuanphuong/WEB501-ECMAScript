@@ -1,6 +1,6 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import "../style.css";
+// import "../style.css";
 import { render, router } from "./lib/index";
 import About from "./pages/about";
 import AdminProjects from "./pages/admin/projects";

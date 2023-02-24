@@ -1,7 +1,10 @@
 import { router, useEffect } from "../../lib";
 // import { projects } from "../../data/Projects";
+import axios from "axios";
+import { addProjects } from "@/api/project";
 const AddProject = () => {
-  const projects = JSON.parse(localStorage.getItem("projects")) || [];
+  // LOCAL STORAGE
+  // const projects = JSON.parse(localStorage.getItem("projects")) || [];
   useEffect(() => {
     const form = document.querySelector("#form-add");
     const projectName = document.querySelector("#project-name");
@@ -9,15 +12,31 @@ const AddProject = () => {
     form.addEventListener("submit", (e) => {
       e.preventDefault(); //disabled reload
       const project = {
-        id: projects.length + 1,
         name: projectName.value,
         author: projectAuthor.value,
       };
-      console.log(projects);
+
+      /** LOCAL STORAGE
+      console.log(project);
       projects.push(project);
       localStorage.setItem("projects", JSON.stringify(projects));
-      // console.log(projects);
-      router.navigate("/admin/projects");
+      console.log(projects);
+      */
+
+      /**FETCH API
+     fetch("http://localhost:3000/projects", {
+       method: "POST",
+       headers: { "Content-Type": "application/json" },
+       body: JSON.stringify(project),
+     }).then(() => router.navigate("/admin/projects"));
+    */
+      /** axios
+        .post("http://localhost:3000/projects", project)
+        .then(() => router.navigate("/admin/projects"));
+     */
+      addProjects(project)
+        .then(() => router.navigate("/admin/projects"))
+        .catch((error) => console.log(error));
     });
   });
   return `<div class="container mt-3">

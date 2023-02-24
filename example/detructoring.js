@@ -19,7 +19,6 @@ const person = {
 // console.log("My info: " + name, age, "\n", district, city);
 /* const { city, district } = person.address;
  console.log("Living: " + address); */
-
 const showInfo = ({ name, age }) => {
   console.log("My info: " + name, age);
 };

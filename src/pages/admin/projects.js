@@ -1,6 +1,7 @@
 // import { projects } from "@/data/Projects";
 import { useEffect, useState } from "../../lib";
-
+import axios from "axios";
+import { getProjects, deleteProject } from "@/api/project";
 const AdminProjects = () => {
   /**
    *
@@ -11,27 +12,45 @@ const AdminProjects = () => {
    *    - Thêm sự kiện click cho các nút remove
    */
 
-  const [data, setData] = useState([]);
+  const [projects, setProject] = useState([]);
   useEffect(() => {
-    // fetch("https://reqres.in/api/users?page=2")
-    //   .then((response) => response.json())
-    //   .then(({ data }) => console.log(data));
-
-    const projects = JSON.parse(localStorage.getItem("projects")) || [];
-    setData(projects);
-  }, []);
+    /**LOCAL STORAGE
+     const projects = JSON.parse(localStorage.getItem("projects")) || [];
+     setProject(projects);
+   ------------------------------------------------------------------------
+     fetch API
+     fetch("http://localhost:3000/projects")
+     .then((response) => response.json())
+     .then((projects) => setProject(projects));
+    */
+    // axios
+    //   .get("http://localhost:3000/projects")
+    //   .then(({ data }) => setProject(data));
+    getProjects()
+      .then(({ data }) => setProject(data))
+      .catch((error) => console.log(error));
+  }, []); // điều kiện để gọi lại useEffect
 
   useEffect(() => {
     const btns = document.querySelectorAll(".btn-remove");
     for (let btn of btns) {
       btn.addEventListener("click", function () {
         const id = this.dataset.id;
-        const newData = data.filter((project) => project.id != id);
-        setData(newData);
+        const comfirmdel = window.confirm("Bạn có chắc chắn muốn xóa không?");
+        if (comfirmdel) {
+          deleteProject(id)
+            .then(() => {
+              //reRender
+              const newProjects = projects.filter(
+                (project) => project.id !== Number(id)
+              );
+              setProject(newProjects);
+            })
+            .catch((error) => console.log(error));
+        }
       });
     }
   });
-
   return `<div class="container">
   <h1 class="tw-font-bold tw-text-2xl tw-my-3">Quản lý dự án</h1>
   <table class="table table-bordered">
@@ -43,7 +62,7 @@ const AdminProjects = () => {
         <th></th>
       </tr>
     </thead>
-    ${data
+    ${projects
       .map(
         (project) => `<tbody>
     <tr>
